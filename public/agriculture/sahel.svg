@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+  <defs><linearGradient id="sky" y2="1"><stop stop-color="#e79a54"/><stop offset="1" stop-color="#f4d18a"/></linearGradient><linearGradient id="sand" y2="1"><stop stop-color="#d89c4c"/><stop offset="1" stop-color="#8f552e"/></linearGradient></defs>
+  <rect width="1200" height="700" fill="url(#sky)"/><circle cx="870" cy="165" r="80" fill="#ffe3a0" opacity=".85"/><path d="M0 420q190-100 400 0t400-10 400 0v290H0z" fill="#b87938"/><path d="M0 510q260-80 520 0t680-15v205H0z" fill="url(#sand)"/>
+  <g stroke="#e0b362" stroke-width="7" opacity=".8"><path d="M40 570q180-60 350 0t360 0 410-15"/><path d="M0 635q210-65 420 0t380 0 400-15"/></g>
+  <g fill="#4d653b"><path d="M210 475q20-100 45 0l-20 115h-25zM250 480q25-75 45 0l-15 100h-25zM1030 450q25-100 50 0l-20 130h-30z"/></g>
+</svg>

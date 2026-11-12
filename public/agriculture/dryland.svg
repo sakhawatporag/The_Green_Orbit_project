@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+  <defs><linearGradient id="sky" y2="1"><stop stop-color="#8bb5c0"/><stop offset="1" stop-color="#f0c077"/></linearGradient><linearGradient id="soil" y2="1"><stop stop-color="#a87d45"/><stop offset="1" stop-color="#5a3d29"/></linearGradient></defs>
+  <rect width="1200" height="700" fill="url(#sky)"/><path d="M0 410 Q230 330 450 410 T900 380 T1200 410V700H0Z" fill="#7b6e3f"/><path d="M0 500 Q260 430 520 490 T1200 470V700H0Z" fill="url(#soil)"/>
+  <g stroke="#d7a65a" stroke-width="8" opacity=".65"><path d="M0 550 Q260 480 530 550 T1200 530"/><path d="M0 610 Q260 540 530 610 T1200 590"/><path d="M0 670 Q260 600 530 670 T1200 650"/></g>
+  <path d="M840 120q30-95 60 0v180h-60zM890 160q28-80 55 0v140h-55z" fill="#6d713d" opacity=".8"/>
+</svg>
