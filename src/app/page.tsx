@@ -64,9 +64,11 @@ export default function Home() {
   const [places, setPlaces] = useState<MapPlace[]>([]);
   const [placesError, setPlacesError] = useState("");
   const [hasExplored, setHasExplored] = useState(false);
+  const [isUnlocking, setIsUnlocking] = useState(false);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
   const [waterPriority, setWaterPriority] = useState(68);
   const [soilPriority, setSoilPriority] = useState(82);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const countryId = Object.entries(countries).find(([, item]) => item.name === location.country)?.[0];
   const country = countryId ? countries[countryId] : undefined;
   const rotations = useMemo(() => plannerRotations(country?.mainCrops, location.country), [country?.mainCrops, location.country]);
@@ -87,11 +89,35 @@ export default function Home() {
     return () => controller.abort();
   }, [location.latitude, location.longitude]);
 
+  useEffect(() => {
+    if (!isUnlocking) return;
+    const timer = window.setTimeout(() => {
+      setIsUnlocking(false);
+      setHasExplored(true);
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [isUnlocking]);
+
+  useEffect(() => {
+    function updateScrollProgress() {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0);
+    }
+    updateScrollProgress();
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+    return () => {
+      window.removeEventListener("scroll", updateScrollProgress);
+      window.removeEventListener("resize", updateScrollProgress);
+    };
+  }, []);
+
   function explore(name: string, latitude: number, longitude: number, selectedCountry: string) {
     setPlaces([]);
     setPlacesError("");
+    setHasExplored(false);
+    setIsUnlocking(true);
     setLocation(locationFromResult(name, latitude, longitude, selectedCountry));
-    setHasExplored(true);
   }
 
   function selectMap(latitude: number, longitude: number) {
@@ -114,6 +140,7 @@ export default function Home() {
 
   return (
     <main className="site-shell">
+      <div className="scroll-progress" aria-hidden="true"><span style={{ width: `${scrollProgress}%` }} /></div>
       <header className="site-header">
         <a className="brand" href="#top"><span className="brand-mark">A</span><span>The green Orbit</span></a>
         <nav className="header-links"><a href="#overview">Overview</a><a href="#crops">Crops</a><a href="#sources">Sources</a></nav>
@@ -126,6 +153,11 @@ export default function Home() {
           <h1>Better decisions<br /><span>start with place.</span></h1>
           <p className="hero-lede">Explore local weather, crops, farming systems, and circular energy with one clear view of Earth.</p>
           <LocationSearch onSelect={selectSearchResult} />
+          {isUnlocking && <div className="nasa-connection" role="status" aria-live="polite">
+            <div className="nasa-connection-orbit" aria-hidden="true"><span /><i /><b>✦</b></div>
+            <div className="nasa-connection-copy"><strong>Connecting to Earth intelligence</strong><span>Locating field coordinates · syncing NASA signals · preparing your insights</span></div>
+            <div className="nasa-connection-pulse" aria-hidden="true" />
+          </div>}
           <p className="helper-text">Search a city, country, region, or coordinates.</p>
         </div>
         <div className="hero-globe"><EarthGlobe locations={locations} selectedLocation={selectedLocationIndex} onSelect={selectGlobeLocation} selectedCountry={countryId} onCountrySelect={selectCountry} /></div>

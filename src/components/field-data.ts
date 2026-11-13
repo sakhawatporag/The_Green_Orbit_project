@@ -40,7 +40,7 @@ export const locations: FieldLocation[] = [
     country: "Senegal",
     shortName: "Sahel",
     latitude: 14.7,
-    longitude: -17.5,
+    longitude: -15.2,
     position: "left-[67%] top-[48%]",
     color: "#ffd37a",
     soil: "0.12 m³/m³",

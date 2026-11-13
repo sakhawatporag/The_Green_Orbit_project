@@ -3,11 +3,14 @@
 :root { --ink: #eaf3e8; --muted: #91a99a; --green: #b7f36b; --panel: #10251c; --line: rgba(224, 245, 225, .12); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+html { scroll-padding-top: 20px; }
 body { margin: 0; background: #07130f; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 a { color: inherit; text-decoration: none; }
 
 .site-shell { min-height: 100vh; overflow: hidden; background: radial-gradient(circle at 82% 4%, rgba(183,243,107,.13), transparent 28rem), #07130f; }
+.scroll-progress { position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 3px; pointer-events: none; background: rgba(255,255,255,.06); }
+.scroll-progress span { display: block; height: 100%; border-radius: 0 999px 999px 0; background: linear-gradient(90deg, #9fe8ff, var(--green), #e5a7ff); box-shadow: 0 0 12px rgba(183,243,107,.8); transition: width .12s ease-out; }
 .site-header { width: min(1240px, calc(100% - 40px)); margin: auto; height: 74px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 11px; font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .brand em { color: var(--green); font-style: normal; }
@@ -24,10 +27,39 @@ a { color: inherit; text-decoration: none; }
 .hero-copy h1 span { color: var(--green); }
 .hero-lede { max-width: 500px; margin: 28px 0 24px; color: #b5c8b9; font-size: 18px; line-height: 1.7; }
 .helper-text { color: #647d6c; font-size: 12px; }
+.search-story { position: relative; overflow: hidden; margin-top: 16px; padding: 16px; border: 1px solid rgba(183,243,107,.18); border-radius: 18px; background: linear-gradient(120deg, rgba(183,243,107,.08), rgba(159,232,255,.04)); animation: search-story-in .7s cubic-bezier(.16, 1, .3, 1) both; }
+.search-story::after { position: absolute; top: 0; bottom: 0; left: -30%; width: 25%; content: ""; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(198,255,123,.2), transparent); transform: skewX(-18deg); animation: search-story-scan 3.8s ease-in-out infinite; }
+.search-story-heading { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; }
+.search-story-heading p { margin: 0; color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.search-story-heading span:last-child { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+.search-story-spark { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(183,243,107,.4); border-radius: 50%; color: var(--green); animation: search-story-pulse 2s ease-in-out infinite; }
+.search-story-steps { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 7px; margin-top: 16px; }
+.search-story-step { display: grid; gap: 5px; }
+.search-story-step b { color: #9fe8ff; font-size: 10px; letter-spacing: .12em; }
+.search-story-step span { color: #d3e2d3; font-size: 11px; line-height: 1.25; }
+.search-story-steps i { width: 18px; height: 1px; background: linear-gradient(90deg, rgba(159,232,255,.15), var(--green), rgba(159,232,255,.15)); animation: search-story-line 1.8s ease-in-out infinite; }
+@keyframes search-story-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes search-story-scan { 0%, 35% { left: -30%; } 75%, 100% { left: 120%; } }
+@keyframes search-story-pulse { 0%, 100% { box-shadow: 0 0 0 rgba(183,243,107,0); transform: scale(1); } 50% { box-shadow: 0 0 18px rgba(183,243,107,.28); transform: scale(1.08); } }
+@keyframes search-story-line { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+.nasa-connection { position: relative; display: flex; align-items: center; gap: 12px; overflow: hidden; margin-top: 16px; padding: 12px 14px; border: 1px solid rgba(159,232,255,.3); border-radius: 16px; background: linear-gradient(110deg, rgba(159,232,255,.1), rgba(183,243,107,.06)); box-shadow: 0 0 28px rgba(159,232,255,.08); animation: connection-in .45s cubic-bezier(.16, 1, .3, 1) both; }
+.nasa-connection::before { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent); transform: translateX(-100%); animation: connection-scan 1.5s ease-in-out infinite; }
+.nasa-connection-orbit { position: relative; flex: 0 0 34px; width: 34px; height: 34px; border: 1px solid rgba(159,232,255,.5); border-radius: 50%; animation: connection-spin 2.2s linear infinite; }
+.nasa-connection-orbit span { position: absolute; top: -3px; left: 14px; width: 6px; height: 6px; border-radius: 50%; background: #9fe8ff; box-shadow: 0 0 10px #9fe8ff; }
+.nasa-connection-orbit i { position: absolute; inset: 5px; border: 1px solid rgba(183,243,107,.5); border-radius: 50%; transform: rotate(55deg) skewX(25deg); }
+.nasa-connection-orbit b { position: absolute; inset: 0; display: grid; place-items: center; color: var(--green); font-size: 13px; }
+.nasa-connection-copy { position: relative; z-index: 1; display: grid; gap: 4px; min-width: 0; }
+.nasa-connection-copy strong { color: #dff7e3; font-size: 12px; letter-spacing: .04em; }
+.nasa-connection-copy span { overflow: hidden; color: #8faeb0; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.nasa-connection-pulse { position: absolute; right: 15px; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(183,243,107,.12), 0 0 14px var(--green); animation: connection-pulse 1s ease-in-out infinite; }
+@keyframes connection-in { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes connection-scan { to { transform: translateX(100%); } }
+@keyframes connection-spin { to { transform: rotate(360deg); } }
+@keyframes connection-pulse { 0%, 100% { opacity: .35; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.25); } }
 .hero-globe { display: flex; justify-content: center; }
-.dashboard { padding-bottom: 80px; opacity: .25; transition: opacity .5s ease; }
-.dashboard-visible { opacity: 1; }
-.scroll-reveal { opacity: 0; transform: translate3d(0, 46px, 0) scale(.985); filter: blur(5px); transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1), filter .8s ease; transition-delay: var(--reveal-delay, 0ms); }
+.dashboard { padding-bottom: 80px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s ease; }
+.dashboard-visible { opacity: 1; visibility: visible; pointer-events: auto; }
+.scroll-reveal { opacity: 0; transform: translate3d(0, 32px, 0) scale(.99); filter: blur(4px); transition: opacity .55s cubic-bezier(.16, 1, .3, 1), transform .55s cubic-bezier(.16, 1, .3, 1), filter .55s ease; transition-delay: var(--reveal-delay, 0ms); will-change: opacity, transform, filter; }
 .scroll-reveal-visible { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
 .location-strip, .panel, .map-weather-grid > section, .dashboard > section:not(.sources-section) { margin-top: 20px; }
 .location-strip, .panel { border: 1px solid var(--line); border-radius: 24px; background: rgba(16, 37, 28, .82); padding: 28px; }
@@ -167,6 +199,8 @@ a { color: inherit; text-decoration: none; }
   .facility-grid { grid-template-columns: 1fr; }
   .selected-location-head { flex-direction: column; gap: 12px; }
   .selected-location-metrics { grid-template-columns: 1fr; }
+  .search-story-steps { grid-template-columns: 1fr; gap: 10px; }
+  .search-story-steps i { width: 1px; height: 10px; margin-left: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .earth-surface, .earth-texture, .field-location, .country-pin, .country-pin span { animation: none; }

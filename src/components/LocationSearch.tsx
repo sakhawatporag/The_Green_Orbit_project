@@ -7,11 +7,12 @@ type Result = { name: string; country: string; latitude: number; longitude: numb
 type Props = { onSelect: (result: Result) => void };
 
 export function LocationSearch({ onSelect }: Props) {
-  const [query, setQuery] = useState("Iowa, United States");
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCountries, setShowCountries] = useState(false);
+  const [hasSelectedLocation, setHasSelectedLocation] = useState(false);
 
   async function search(event: FormEvent) {
     event.preventDefault();
@@ -36,12 +37,22 @@ export function LocationSearch({ onSelect }: Props) {
       <input value={query} onFocus={() => { setShowCountries(true); setQuery(""); }} onChange={(event) => { setQuery(event.target.value); setShowCountries(true); }} aria-label="Search for a location" placeholder="Search city, country, or coordinates" className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-[#c6ff7b]" />
       <button disabled={loading} className="rounded-xl bg-[#c6ff7b] px-4 py-3 text-sm font-bold text-[#102218] disabled:opacity-50">{loading ? "Searching…" : "Search"}</button>
     </form>
+    {!hasSelectedLocation && !showCountries && !results.length && <div className="search-story" aria-label="How The Green Orbit works">
+      <div className="search-story-heading"><span className="search-story-spark" aria-hidden="true">✦</span><div><p>Unlock your field treasure</p><span>See what happens when you explore a place</span></div></div>
+      <div className="search-story-steps">
+        <div className="search-story-step"><b>01</b><span>Search a country</span></div>
+        <i aria-hidden="true" />
+        <div className="search-story-step"><b>02</b><span>Read NASA signals</span></div>
+        <i aria-hidden="true" />
+        <div className="search-story-step"><b>03</b><span>Find local insight</span></div>
+      </div>
+    </div>}
     {showCountries && <div className="country-options absolute left-0 right-0 top-[calc(100%-4px)] z-30 max-h-72 overflow-y-auto rounded-xl border border-white/15 bg-[#10291f] p-2 shadow-2xl">
       <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8fa49a]">{countryOptions.length} countries · choose a country</p>
-      {countryOptions.map(([id, country]) => <button key={id} type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect({ name: country.name, country: country.name, latitude: country.lat, longitude: country.lon }); setQuery(country.name); setShowCountries(false); setResults([]); }} className="block w-full rounded-lg px-3 py-2 text-left text-sm text-[#d3e2d3] transition hover:bg-[#c6ff7b]/15 hover:text-[#c6ff7b]">{country.name}</button>)}
+      {countryOptions.map(([id, country]) => <button key={id} type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect({ name: country.name, country: country.name, latitude: country.lat, longitude: country.lon }); setHasSelectedLocation(true); setQuery(country.name); setShowCountries(false); setResults([]); }} className="block w-full rounded-lg px-3 py-2 text-left text-sm text-[#d3e2d3] transition hover:bg-[#c6ff7b]/15 hover:text-[#c6ff7b]">{country.name}</button>)}
       {!countryOptions.length && <p className="px-3 py-3 text-sm text-[#8fa49a]">No country matches. Press Search to look up a city or region.</p>}
     </div>}
     {error && <p className="text-sm text-amber-200">{error}</p>}
-    {results.length > 0 && <div className="grid gap-2">{results.map((result) => <button key={`${result.latitude}-${result.longitude}`} onClick={() => { onSelect(result); setResults([]); setQuery(result.name); setShowCountries(false); }} className="rounded-xl border border-white/10 bg-white/5 p-3 text-left text-sm text-[#d3e2d3] transition hover:border-[#c6ff7b]/50">{result.name}</button>)}</div>}
+    {results.length > 0 && <div className="grid gap-2">{results.map((result) => <button key={`${result.latitude}-${result.longitude}`} onClick={() => { onSelect(result); setHasSelectedLocation(true); setResults([]); setQuery(result.name); setShowCountries(false); }} className="rounded-xl border border-white/10 bg-white/5 p-3 text-left text-sm text-[#d3e2d3] transition hover:border-[#c6ff7b]/50">{result.name}</button>)}</div>}
   </div>;
 }
