@@ -1,0 +1,4 @@
+1. Unzip this file.
+2. Open your repo on github.com -> Add file -> Upload files.
+3. Drag EVERYTHING from the unzipped folder (including the .github folder) into the page.
+4. Commit changes. Done.
