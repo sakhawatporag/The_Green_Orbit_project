@@ -169,7 +169,7 @@ export default function Home() {
         </section></ScrollReveal>
 
         <ScrollReveal delay={80}><CountryExplorer selectedCountry={countryId ?? ""} onSelect={selectCountry} /></ScrollReveal>
-        <ScrollReveal delay={120}><NasaGallery key={`satellite-${location.country}-${location.latitude}`} query={`${location.country} satellite Earth observation`} /></ScrollReveal>
+        <ScrollReveal delay={120}><NasaGallery key={`satellite-${location.country}-${location.latitude}`} country={location.country} crops={country?.mainCrops} /></ScrollReveal>
 
         <ScrollReveal delay={160}><section className="map-weather-grid">
           <div className="panel map-panel"><div className="panel-heading"><div><p className="eyebrow">Live map</p><h2>What is nearby?</h2></div><span className="panel-count">{places.length} places</span></div><AgroMap latitude={location.latitude} longitude={location.longitude} places={places} onSelect={selectMap} /></div>
