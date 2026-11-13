@@ -19,7 +19,7 @@ function countryPosition(latitude: number, longitude: number) {
 
 export function EarthGlobe({ locations, selectedLocation, onSelect, selectedCountry, onCountrySelect }: Props) {
   return (
-    <div className="earth-orbit relative mx-auto aspect-square w-full max-w-[520px] animate-[float_7s_ease-in-out_infinite]">
+    <div className="earth-orbit relative mx-auto aspect-square w-full max-w-130 animate-[float_7s_ease-in-out_infinite]">
       <div className="absolute inset-0 rounded-full border border-[#c6ff7b]/10" />
       <div className="absolute inset-5 rounded-full border border-dashed border-[#c6ff7b]/15" />
       <div className="earth absolute inset-8 overflow-hidden rounded-full shadow-[0_0_90px_rgba(23,137,190,0.35),inset_-24px_-12px_42px_rgba(0,0,0,.7)]" aria-label="Rotating Earth with agricultural locations" role="img">

@@ -134,7 +134,6 @@ export default function Home() {
       <div className={`dashboard ${hasExplored ? "dashboard-visible" : ""}`}>
         <ScrollReveal><section id="overview" className="location-strip">
           <div><p className="eyebrow">Selected area</p><h2>{location.name}</h2><p>{location.country} · {location.latitude.toFixed(2)}°, {location.longitude.toFixed(2)}°</p></div>
-          <LocationSearch onSelect={selectSearchResult} />
         </section></ScrollReveal>
 
         <ScrollReveal delay={80}><CountryExplorer selectedCountry={countryId ?? ""} onSelect={selectCountry} /></ScrollReveal>
